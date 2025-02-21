@@ -21,6 +21,14 @@ packages = ('snowflake-snowpark-python')
 imports = ('/libraries/udf.py')
 handler = 'udf.cal_lead_time';
 
+create or replace function app_instance_schema.hello_world()
+returns string
+language python
+runtime_version = '3.8'
+packages = ('snowflake-snowpark-python')
+imports = ('/libraries/udf.py')
+handler = 'udf.hello_world';
+
 create or replace function app_instance_schema.cal_distance(slat float,slon float,elat float,elon float)
 returns float
 language python
@@ -58,6 +66,7 @@ end;
 $$;
 
 -- Grant usage and permissions on objects
+grant usage on function app_instance_schema.hello_world() to application role app_instance_role;
 grant usage on schema app_instance_schema to application role app_instance_role;
 grant usage on function app_instance_schema.cal_lead_time(int,int,int) to application role app_instance_role;
 grant usage on procedure app_instance_schema.billing_event(int) to application role app_instance_role;
